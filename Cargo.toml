@@ -3,9 +3,11 @@ name = "decent-serde-json-alternative"
 version = "0.1.0"
 authors = ["Loïc Lecrenier <loic.lecrenier@me.com>"]
 edition = "2018"
-
+license = "MIT"
+repository = "https://git.sr.ht/~loic/decent-serde-json-alternative"
+keywords = ["json"]
+description = "This crate buils on the json crate to provide the FromJson and ToJson traits. You can pair it with the decent-serde-json-derive-alternative crate to automatically derive an implementation of those traits for your own types. In some cases, this can serve your (de)serialization needs without having to build syn, quote, serde, and serde_json."
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-# decent-synquote-alternative = { git = "https://git.sr.ht/~loic/decent-synquote-alternative", branch = "master" }
 json = "0.12.0"
