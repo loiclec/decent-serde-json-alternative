@@ -2,6 +2,9 @@
 use std::{collections::HashMap, convert::TryInto};
 use json::{JsonValue, object::Object};
 
+#[cfg(feature="derive")]
+pub use decent_serde_json_derive_alternative::{FromJson, ToJson};
+
 pub trait FromJson : Sized {
     fn from_json(json: &JsonValue) -> Option<Self>;
 }
