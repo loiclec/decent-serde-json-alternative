@@ -15,4 +15,8 @@ derive = ["decent-serde-json-derive-alternative"]
 
 [dependencies]
 json = "0.12.0"
-decent-serde-json-derive-alternative = { version = "0.1", optional = true } 
+
+[dependencies.decent-serde-json-derive-alternative]
+path = "../decent-serde-json-derive-alternative"
+version = "0.1"
+optional = true
