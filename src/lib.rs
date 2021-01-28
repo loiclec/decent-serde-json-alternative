@@ -1,11 +1,11 @@
-
+use json::{object::Object, JsonValue};
 use std::{collections::HashMap, convert::TryInto};
-use json::{JsonValue, object::Object};
 
-#[cfg(feature="derive")]
+use decent_serde_json_derive_alternative::derive_from_json_to_json_for_tuple;
+
 pub use decent_serde_json_derive_alternative::{FromJson, ToJson};
 
-pub trait FromJson : Sized {
+pub trait FromJson: Sized {
     fn from_json(json: &JsonValue) -> Option<Self>;
 }
 
@@ -50,13 +50,19 @@ impl ToJson for bool {
     }
 }
 
-impl<T> ToJson for Vec<T> where T: ToJson {
+impl<T> ToJson for Vec<T>
+where
+    T: ToJson,
+{
     fn to_json(&self) -> JsonValue {
         JsonValue::Array(self.iter().map(|x| x.to_json()).collect())
     }
 }
 
-impl<V> ToJson for HashMap<String, V> where V: ToJson {
+impl<V> ToJson for HashMap<String, V>
+where
+    V: ToJson,
+{
     fn to_json(&self) -> JsonValue {
         let mut o = Object::new();
         for (key, value) in self {
@@ -66,19 +72,21 @@ impl<V> ToJson for HashMap<String, V> where V: ToJson {
     }
 }
 
-impl<T> ToJson for Option<T> where T: ToJson {
+impl<T> ToJson for Option<T>
+where
+    T: ToJson,
+{
     fn to_json(&self) -> JsonValue {
         match self {
-            Some(x) => {
-                x.to_json()
-            }
-            None => {
-                JsonValue::Null
-            }
+            Some(x) => x.to_json(),
+            None => JsonValue::Null,
         }
     }
 }
-impl<T> ToJson for Box<T> where T: ToJson {
+impl<T> ToJson for Box<T>
+where
+    T: ToJson,
+{
     fn to_json(&self) -> JsonValue {
         self.as_ref().to_json()
     }
@@ -135,7 +143,10 @@ impl FromJson for bool {
     }
 }
 
-impl<T> FromJson for Vec<T> where T: FromJson {
+impl<T> FromJson for Vec<T>
+where
+    T: FromJson,
+{
     fn from_json(json: &JsonValue) -> Option<Self> {
         if let JsonValue::Array(xs) = json {
             let mut res = vec![];
@@ -143,7 +154,7 @@ impl<T> FromJson for Vec<T> where T: FromJson {
                 if let Some(x) = T::from_json(x) {
                     res.push(x);
                 } else {
-                    return None
+                    return None;
                 }
             }
             Some(res)
@@ -153,7 +164,10 @@ impl<T> FromJson for Vec<T> where T: FromJson {
     }
 }
 
-impl<V> FromJson for HashMap<String, V> where V: FromJson {
+impl<V> FromJson for HashMap<String, V>
+where
+    V: FromJson,
+{
     fn from_json(json: &JsonValue) -> Option<Self> {
         if let JsonValue::Object(o) = json {
             let mut res = HashMap::new();
@@ -161,7 +175,7 @@ impl<V> FromJson for HashMap<String, V> where V: FromJson {
                 if let Some(value) = V::from_json(value) {
                     res.insert(key.to_string(), value);
                 } else {
-                    return None
+                    return None;
                 }
             }
             Some(res)
@@ -171,7 +185,10 @@ impl<V> FromJson for HashMap<String, V> where V: FromJson {
     }
 }
 
-impl<T> FromJson for Option<T> where T: FromJson {
+impl<T> FromJson for Option<T>
+where
+    T: FromJson,
+{
     fn from_json(json: &JsonValue) -> Option<Self> {
         if let JsonValue::Null = json {
             Some(None)
@@ -183,8 +200,21 @@ impl<T> FromJson for Option<T> where T: FromJson {
     }
 }
 
-impl<T> FromJson for Box<T> where T: FromJson {
+impl<T> FromJson for Box<T>
+where
+    T: FromJson,
+{
     fn from_json(json: &JsonValue) -> Option<Self> {
         T::from_json(json).map(Box::new)
     }
 }
+
+derive_from_json_to_json_for_tuple!(2);
+derive_from_json_to_json_for_tuple!(3);
+derive_from_json_to_json_for_tuple!(4);
+derive_from_json_to_json_for_tuple!(5);
+derive_from_json_to_json_for_tuple!(6);
+derive_from_json_to_json_for_tuple!(7);
+derive_from_json_to_json_for_tuple!(8);
+derive_from_json_to_json_for_tuple!(9);
+derive_from_json_to_json_for_tuple!(10);

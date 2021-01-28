@@ -9,14 +9,9 @@ keywords = ["json"]
 description = "This crate builds on the json crate to provide the FromJson and ToJson traits. You can pair it with the decent-serde-json-derive-alternative crate to automatically derive an implementation of those traits for your own types. In some cases, this can serve your (de)serialization needs without having to build syn, quote, serde, and serde_json."
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[features]
-default = []
-derive = ["decent-serde-json-derive-alternative"]
-
 [dependencies]
 json = "0.12.0"
 
 [dependencies.decent-serde-json-derive-alternative]
-path = "../decent-serde-json-derive-alternative"
-version = "0.2"
-optional = true
+# path = "../decent-serde-json-derive-alternative"
+version = "0.3"
